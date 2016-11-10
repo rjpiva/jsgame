@@ -56,8 +56,8 @@ function Bola(x,y){
 
 Bola.prototype.desenha = function(){
     fill(255)
-    this.mover(this.x + random(0,10), this.y + random(0,10));
-    ellipse(this.x, this.y, 30, 30);
+    this.mover(this.x + random(0,move_ballSlider.value()), this.y + random(0,move_ballSlider.value()));
+    ellipse(this.x, this.y, size_ballSlider.value(), size_ballSlider.value());
 };
 
 Bola.prototype.mover = function(a,b){
@@ -93,9 +93,9 @@ function addBola(x,y){
 };
 
 function insereBolaCanvas() {
-  if (frameCount % 20 == 0) {
+  if (frameCount % frame_rateSlider.value() == 0) {
   //  addBola(10*random(0,20),10*random(0,20));
-    addBola(random(20,0),random(20,0));
+      addBola(random(20,0),random(20,0));
   //  addBola(random(20,80),random(20,80));
   };
 };
@@ -198,16 +198,27 @@ sai = {roda: true};
 
 //GAME CONFIG
 function setup(){
+
+
+// create sliders (min,max,default)
+  frame_rateSlider = createSlider(1, 40, 20); //framerate do insereBolaCanvas
+  frame_rateSlider.position(400, 20);
+  move_ballSlider = createSlider(0, 30, 10); //incremento do bola.prototype.desenha
+  move_ballSlider.position(400, 50);
+  size_ballSlider = createSlider(1, 100, 30); //tamanho das bolas do bola.prototype.desenha
+  size_ballSlider.position(400, 80);         
+
   frameRate(120);
   createCanvas(400,400);
   sol = new Sol(350,80);
   b1 = new Principal(300, 100);
   backgr = new Camadas(montaBackground());
+
 };
 
 // GAME LOOP
 function draw(){
-  
+
   if (sai.roda) {
 
     background(0);
@@ -244,3 +255,6 @@ function draw(){
   }
 
 };
+
+
+
